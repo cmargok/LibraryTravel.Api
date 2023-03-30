@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Travel.Application.Dtos.Autores;
 using Travel.Application.Dtos.Editoriales;
 using Travel.Application.Dtos.Libros;
 using Travel.Application.Services;
@@ -19,6 +20,14 @@ namespace Travel.Api.Controllers
             _librosManager = librosManager;
         }
 
+
+        /// <summary>
+        /// Metodo para obtener todos los libros en la libreria
+        /// </summary>
+        /// <returns>Lista con los libros</returns>
+        [ProducesResponseType(typeof(ApiResponse<List<LibroDto>>),200)]
+        [ProducesResponseType(typeof(ApiResponse<List<LibroDto>>), 404)]
+        [ProducesResponseType(typeof(Problem),500)]
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
@@ -32,6 +41,16 @@ namespace Travel.Api.Controllers
             return NotFound(Tools.CreateResponse(result, Result.NotFound, result.Count));
 
         }
+
+
+        /// <summary>
+        /// Metodo para obtener un libro en especifico por medio dele ISBN
+        /// </summary>
+        /// /// <param name="isbn"></param>
+        /// <returns>Lista con los libros</returns>
+        [ProducesResponseType(typeof(ApiResponse<LibroDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<LibroDto>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
 
         [HttpGet("ISBN")]
         public async Task<IActionResult> GetById(string isbn,CancellationToken cancellationToken)
@@ -47,6 +66,14 @@ namespace Travel.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Metodo para obtener todos los libros que tiene un autor en especifico por medio del AutorId
+        /// </summary>
+        /// /// <param name="AutorId"></param>
+        /// <returns>Lista con los libros</returns>
+        [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
 
         [HttpGet("/api/v1/Autor/{AutorId}/libros")]
         public async Task<IActionResult> Get(int AutorId, CancellationToken cancellationToken)
@@ -62,6 +89,15 @@ namespace Travel.Api.Controllers
 
         }
 
+
+        /// <summary>
+        /// Metodo para añadir un libro a la libreria
+        /// </summary>
+        /// <param name="addLibro"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AddLibroDto addLibro, CancellationToken cancellationToken)
         {

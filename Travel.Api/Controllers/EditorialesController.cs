@@ -7,17 +7,28 @@ using Travel.Domain.Tools;
 
 namespace Travel.Api.Controllers
 {
+    /// <summary>
+    /// Editoriales
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ApiController]
     public class EditorialesController : ControllerBase
     {
         private readonly IEditorialManager _editorialManager;
+
+       
         public EditorialesController(IEditorialManager editorialManager)
         {
             _editorialManager = editorialManager;
         }
 
-
+        /// <summary>
+        /// Metodo para obtener todas las editoriales
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<List<EditorialDto>>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<List<EditorialDto>>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
@@ -32,6 +43,16 @@ namespace Travel.Api.Controllers
 
         }
 
+
+
+        /// <summary>
+        /// Metodo para añadir una nueva editorial a la libreria
+        /// </summary>
+        /// <param name="editorialBasic"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
         [HttpPost("Add")]
         public async Task<IActionResult> Add(EditorialBasicDto editorialBasic, CancellationToken cancellationToken)
         {

@@ -7,5 +7,4 @@ namespace Travel.Domain.Tools
         public string Result { get; set; }  
         public int? DataCount { get; set; }  
     }
-
 }

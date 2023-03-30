@@ -18,7 +18,13 @@ namespace Travel.Api.Controllers
             _autorManager = autorManager;
         }
 
-
+        /// <summary>
+        /// Metodo para obtener todos los autores que tienen o han tenido libros en la libreria
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<List<AutorDto>>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<List<AutorDto>>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
@@ -32,7 +38,14 @@ namespace Travel.Api.Controllers
             return NotFound(Tools.CreateResponse(result, Result.NotFound, result.Count));
 
         }
-
+        /// <summary>
+        /// Metodo para obtener informacion sobre un autor
+        /// </summary>
+        /// <param name="AutorId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<AutorDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<AutorDto>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
         [HttpGet("{AutorId}")]
         public async Task<IActionResult> Get(int AutorId,CancellationToken cancellationToken)
         {
@@ -46,6 +59,16 @@ namespace Travel.Api.Controllers
             return NotFound(Tools.CreateResponse(result, Result.NotFound, 0));
 
         }
+
+
+        /// <summary>
+        /// Metodo para añadir un nuevo autor a la libreria
+        /// </summary>
+        /// <param name="autorBasic"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
+        [ProducesResponseType(typeof(Problem), 500)]
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AutorBasicDto autorBasic, CancellationToken cancellationToken)
