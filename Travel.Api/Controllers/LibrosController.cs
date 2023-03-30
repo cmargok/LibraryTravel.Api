@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Travel.Application.Dtos.Autores;
 using Travel.Application.Dtos.Editoriales;
@@ -51,7 +52,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<LibroDto>), 200)]
         [ProducesResponseType(typeof(ApiResponse<LibroDto>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
-
+        [Authorize]
         [HttpGet("ISBN")]
         public async Task<IActionResult> GetById(string isbn,CancellationToken cancellationToken)
         {
@@ -74,7 +75,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 200)]
         [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
-
+        [Authorize]
         [HttpGet("/api/v1/Autor/{AutorId}/libros")]
         public async Task<IActionResult> Get(int AutorId, CancellationToken cancellationToken)
         {
@@ -98,6 +99,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
         [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
+        [Authorize]
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AddLibroDto addLibro, CancellationToken cancellationToken)
         {

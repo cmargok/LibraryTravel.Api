@@ -47,8 +47,8 @@ namespace Travel.Api
                 options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
                 {
                     Description = "@JWT Authorization header using the Bearer Scheme." +
-                                    "Enter 'Bearer [space] and then your token in the text input below." +
-                                    "Example = 'Bearer 123456abcdefg'",
+                                    "Ingrese 'Bearer [space] and then your token in the text input below." +
+                                    "Ejemplo = 'Bearer 123456abcdefg'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,

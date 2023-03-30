@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Travel.Application.Dtos.Editoriales;
 using Travel.Application.Services.Contracts;
@@ -53,6 +54,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
         [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
+        [Authorize]
         [HttpPost("Add")]
         public async Task<IActionResult> Add(EditorialBasicDto editorialBasic, CancellationToken cancellationToken)
         {
