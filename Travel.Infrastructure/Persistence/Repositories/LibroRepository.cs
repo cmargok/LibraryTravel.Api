@@ -38,7 +38,7 @@ namespace Travel.Infrastructure.Persistence.Repositories
             {
                 transaction.Rollback();
 
-                throw;
+                return false;
             }           
 
             return true;

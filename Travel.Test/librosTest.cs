@@ -113,5 +113,24 @@ namespace Travel.Test
             _libroRepository.DeleteForTesting(libro.Isbn);
            
         }
+
+        [Test]
+        public async Task AddAsync_ReturnsFalse()
+        {
+            var autorId = 0;
+            var libro = new Libro
+            {
+                EditorialId = 2,
+                Isbn = "5544887765412",
+                NPaginas = "258",
+                Sinopsis = "Es mi libro de prueba",
+                Titulo = "La prueba es el exito"
+            };
+
+            var result = await _libroRepository.AddAsync(libro, autorId, new CancellationToken());
+
+            Assert.That(result, Is.False);
+
+        }
     }
 }
