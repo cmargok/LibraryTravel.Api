@@ -41,7 +41,8 @@ namespace Travel.Api.Middlewares
                 Result = Result.InternalServerError.GetDescription(),
                 Source = error.Source!,
                 StatusCode = 500,
-                Message = error.Message
+                Message = error.Message,
+                TraceId = context.TraceIdentifier
             };
 
             if(error.InnerException != null)
@@ -58,8 +59,9 @@ namespace Travel.Api.Middlewares
         private class Problem : TailMessage
         {
             public int StatusCode { get; set; } = 500;
-            public string Source { get; set; }
-            public string Message { get; set; }
+            public string Source { get; set; } = String.Empty;
+            public string Message { get; set; } = String.Empty;
+            public string TraceId { get; set; } = String.Empty;
         }
     }
 

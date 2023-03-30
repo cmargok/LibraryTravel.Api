@@ -14,7 +14,13 @@ namespace Travel.Api.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            _logger.LoggingInformation($"Received {context.Request.Method} request for {context.Request.Path}");
+            var traceId = context.TraceIdentifier;
+            if (string.IsNullOrEmpty(traceId))
+            {
+                traceId = Guid.NewGuid().ToString();
+                context.TraceIdentifier = traceId;
+            }
+            _logger.LoggingInformation($"Received {context.Request.Method} request for {context.Request.Path} - Trace ID: {traceId}");
             await _next(context);
           
         }

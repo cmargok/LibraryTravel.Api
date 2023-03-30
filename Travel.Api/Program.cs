@@ -40,6 +40,7 @@ namespace Travel.Api
             builder.Logging.ClearProviders();
             builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
             builder.Host.UseNLog();
+            builder.Services.Configure<LoggingSettings>(builder.Configuration.GetSection("LogSettings"));
             builder.Services.AddSingleton<IApiLogger, LoggerManager>();
 
 
