@@ -8,6 +8,8 @@ namespace Travel.Application.Infra_Contracts
 
         public Task<bool> ExistsAsync(string isbn, CancellationToken cancellationToken);
         public Task<bool> AddAsync(Libro entity, int AutorId, CancellationToken cancellationToken);
+
+        public void DeleteForTesting(string isbn);
     }
 
 }

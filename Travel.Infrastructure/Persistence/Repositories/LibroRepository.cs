@@ -85,6 +85,11 @@ namespace Travel.Infrastructure.Persistence.Repositories
             return await _context.Libros.AnyAsync(c => c.Isbn == isbn);
         }
 
-
+        public void DeleteForTesting(string isbn)
+        {
+            var delete = _context.Libros.First(ed => ed.Isbn == isbn);
+            _context.Libros.Remove(delete);
+            _context.SaveChanges();
+        }
     }
 }
