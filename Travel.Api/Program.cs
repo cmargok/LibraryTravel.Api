@@ -45,7 +45,7 @@ namespace Travel.Api
             }
 
             //==================== MiddleWares ===============================
-
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<OperationCanceledMiddleware>();
 
             app.UseCors("AllowAll");

@@ -11,7 +11,7 @@ namespace Travel.Domain.Enums
     public enum Result
     {
         Success,
-        Failure,
+        InternalServerError,
         NoContent,
         NotFound,
 
