@@ -13,7 +13,6 @@ namespace Travel.Application.Infra_Contracts
         //por hacer
         /*
         
-        -implementar el middleware de erroes
         -implementar el log
         -implementar documentacion en los metodos y servicios principales
         -implementar JWT por medio de la api de seguridad, osea implementar el endpoint par agenerar el token y conectarme a la api de seguridad...

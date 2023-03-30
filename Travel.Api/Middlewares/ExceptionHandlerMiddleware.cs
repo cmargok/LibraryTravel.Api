@@ -3,14 +3,15 @@ using System.Text.Json.Serialization;
 using Travel.Domain.Enums;
 using Travel.Domain.Tools;
 using System.Text.Json;
+using Travel.Domain.Tools.Logging;
+
 namespace Travel.Api.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<OperationCanceledMiddleware> _logger;
-        public ExceptionHandlerMiddleware(RequestDelegate next,
-            ILogger<OperationCanceledMiddleware> logger)
+        private readonly IApiLogger _logger;
+        public ExceptionHandlerMiddleware(RequestDelegate next, IApiLogger logger)
         {
             _next = next;
             _logger = logger;
@@ -25,8 +26,8 @@ namespace Travel.Api.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                _logger.LogInformation($"{ex.Source} - ERROR");                
+                _logger.LoggingError(ex, ex.Message);
+                _logger.LoggingInformation($"{ex.Source} - ERROR");                
                 await HandleExceptionAsync(context, ex);
             }
         }

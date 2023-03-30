@@ -1,11 +1,12 @@
-﻿namespace Travel.Api.Middlewares
+﻿using Travel.Domain.Tools.Logging;
+
+namespace Travel.Api.Middlewares
 {
     public class OperationCanceledMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<OperationCanceledMiddleware> _logger;
-        public OperationCanceledMiddleware(RequestDelegate next,
-            ILogger<OperationCanceledMiddleware> logger)
+        private readonly IApiLogger _logger;
+        public OperationCanceledMiddleware(RequestDelegate next, IApiLogger logger)
         {
             _next = next;
             _logger = logger;
@@ -19,7 +20,7 @@
             }
             catch (OperationCanceledException)
             {
-                _logger.LogInformation("Request was cancelled - 409");
+                _logger.LoggingInformation("Request was cancelled - 409");
                 context.Response.StatusCode = 409;
             }
         }

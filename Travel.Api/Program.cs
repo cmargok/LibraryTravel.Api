@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
 using Travel.Api.Configurations;
 using Travel.Api.Middlewares;
 using Travel.Application.Infra_Contracts;
+using Travel.Domain.Tools.Logging;
 using Travel.Infrastructure.Persistence;
 using Travel.Infrastructure.Persistence.Repositories;
 
@@ -11,6 +14,7 @@ namespace Travel.Api
     {
         public static void Main(string[] args)
         {
+            var logger = LogManager.GetLogger("FileConsoleLogger");
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -32,7 +36,11 @@ namespace Travel.Api
                     .AllowAnyOrigin());
             });
 
-
+            //===================Logging ================
+            builder.Logging.ClearProviders();
+            builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+            builder.Host.UseNLog();
+            builder.Services.AddSingleton<IApiLogger, LoggerManager>();
 
 
             var app = builder.Build();
@@ -51,6 +59,8 @@ namespace Travel.Api
             app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<RequestMiddleware>();
 
             app.UseAuthorization();
 
