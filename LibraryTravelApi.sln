@@ -11,11 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Travel.Domain", "Travel.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Travel.Application", "Travel.Application\Travel.Application.csproj", "{C7F5F38A-64B2-409C-9482-3E5AD381E2CD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseBaclup", "DatabaseBaclup", "{AAC1C6D9-62D4-4FB0-A77D-D21A9AB5C920}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\TravelDB.bacpac = ..\..\TravelDB.bacpac
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
