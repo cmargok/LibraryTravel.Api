@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using System.Reflection;
+using System.Text;
 using Travel.Api.Configurations;
 using Travel.Api.Middlewares;
 using Travel.Application.Infra_Contracts;
@@ -41,6 +44,37 @@ namespace Travel.Api
                     }
                 });
 
+                options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+                {
+                    Description = "@JWT Authorization header using the Bearer Scheme." +
+                                    "Enter 'Bearer [space] and then your token in the text input below." +
+                                    "Example = 'Bearer 123456abcdefg'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                 });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = JwtBearerDefaults.AuthenticationScheme,
+
+                                },
+                                Name = JwtBearerDefaults.AuthenticationScheme,
+                                In = ParameterLocation.Header,
+                                Scheme = "0auth2"
+                            },
+                            new List<string>()
+
+                        }
+                });
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
                 options.IncludeXmlComments(xmlPath);
@@ -60,6 +94,36 @@ namespace Travel.Api
             builder.Host.UseNLog();
             builder.Services.Configure<LoggingSettings>(builder.Configuration.GetSection("LogSettings"));
             builder.Services.AddSingleton<IApiLogger, LoggerManager>();
+
+
+
+
+
+
+            builder.Services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(JWToptions =>
+                {
+                    JWToptions.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
+                    };
+                }
+            );
+
+
+
 
 
             var app = builder.Build();
@@ -84,6 +148,7 @@ namespace Travel.Api
 
             app.UseMiddleware<RequestMiddleware>();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

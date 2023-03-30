@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Travel.Application.Dtos.Autores;
 using Travel.Application.Dtos.Editoriales;
@@ -46,6 +47,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<AutorDto>), 200)]
         [ProducesResponseType(typeof(ApiResponse<AutorDto>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
+        [Authorize]
         [HttpGet("{AutorId}")]
         public async Task<IActionResult> Get(int AutorId,CancellationToken cancellationToken)
         {
@@ -69,7 +71,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
         [ProducesResponseType(typeof(ApiResponse<bool>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
-
+        [Authorize]
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AutorBasicDto autorBasic, CancellationToken cancellationToken)
         {
