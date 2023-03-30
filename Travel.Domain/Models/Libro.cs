@@ -6,27 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Travel.Domain.Models
 {
-    public partial class Libro
+    [Table("Libro")]
+    public class Libro
     {
         [Key]
-        [Column("ISBN")]
+        [Column("Isbn")]
         [MaxLength(13)]
-        public int Isbn { get; set; }
-        [Column("editoriales_Id")]
-        public int EditorialesId { get; set; }
-        [Column("titulo")]
+        public string Isbn { get; set; }
+
+
+        [Column("Titulo")]
         [StringLength(45)]
-        [Unicode(false)]
         public string Titulo { get; set; } = null!;
-        [Column("sinopsis", TypeName = "text")]
+
+        [Column("Sinopsis", TypeName = "text")]
         public string Sinopsis { get; set; } = null!;
-        [Column("n_paginas")]
+
+        [Column("NPaginas")]
         [StringLength(45)]
-        [Unicode(false)]
         public string NPaginas { get; set; } = null!;
 
-        [ForeignKey("EditorialesId")]
-        [InverseProperty("Libros")]
-        public virtual Editoriale Editoriales { get; set; } = null!;
+
+        [ForeignKey("Editoriales")]
+        public int EditorialId { get; set; }
+        public Editorial Editoriales { get; set; } 
+
+        public List<AutoresHasLibro> AutorLibro { get; set; }
     }
 }

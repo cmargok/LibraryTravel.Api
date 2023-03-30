@@ -7,9 +7,9 @@ using Travel.Domain.Models;
 
 namespace Travel.Application.Infra_Contracts
 {
-    public interface IAutorRepository : IGeneralRepository<Autore>
+    public interface IAutorRepository : IGeneralRepository<Autor>
     {
-        public Task<List<Autore>> GetAll(CancellationToken cancellationToken);
+        public Task<List<Autor>> GetAll(CancellationToken cancellationToken);
     }
 
 }

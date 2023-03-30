@@ -2,9 +2,9 @@
 
 namespace Travel.Application.Infra_Contracts
 {
-    public interface IEditorialRepository : IGeneralRepository<Editoriale>
+    public interface IEditorialRepository : IGeneralRepository<Editorial>
     {
-        public Task<List<Editoriale>> GetAll(CancellationToken cancellationToken);
+        public Task<List<Editorial>> GetAll(CancellationToken cancellationToken);
     }
 
 }

@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Travel.Application.Infra_Contracts;
+using Travel.Infrastructure.Persistence;
+using Travel.Infrastructure.Persistence.Repositories;
+
 namespace Travel.Api
 {
     public class Program
@@ -8,10 +13,18 @@ namespace Travel.Api
 
             // Add services to the container.
 
+            builder.Services.AddScoped<ILibroRepository,LibroRepository>();
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TravelDB")));
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+
+
 
             var app = builder.Build();
 
