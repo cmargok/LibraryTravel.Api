@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Travel.Api.Configurations;
+using Travel.Api.Middlewares;
 using Travel.Application.Infra_Contracts;
 using Travel.Infrastructure.Persistence;
 using Travel.Infrastructure.Persistence.Repositories;
@@ -12,8 +14,8 @@ namespace Travel.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddScoped<ILibroRepository,LibroRepository>();
+            builder.Services.RegisterRepositories();
+            builder.Services.RegisterServices();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TravelDB")));
 
 
@@ -22,6 +24,13 @@ namespace Travel.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy => policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin());
+            });
 
 
 
@@ -34,6 +43,12 @@ namespace Travel.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            //==================== MiddleWares ===============================
+
+            app.UseMiddleware<OperationCanceledMiddleware>();
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 

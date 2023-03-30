@@ -11,15 +11,18 @@ namespace Travel.Application.Dtos.Libros
 {
     public class LibroDto
     {
-        [MaxLength(13)]
+        [StringLength(13)]
+        [Required]
         public string Isbn { get; set; }
     
         [StringLength(45)]
+        [Required]
         public string Titulo { get; set; } = String.Empty;
  
         public string Sinopsis { get; set; } = String.Empty;
 
         [StringLength(45)]
+        [Required]
         public string NPaginas { get; set; } = String.Empty;
 
     }

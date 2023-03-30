@@ -11,7 +11,7 @@ namespace Travel.Infrastructure.Persistence.Repositories
         {
             _context = context;
         }
-        public async Task<bool> Add(Autor entity, CancellationToken cancellationToken)
+        public async Task<bool> AddAsync(Autor entity, CancellationToken cancellationToken)
         {
             await _context.Autores.AddAsync(entity, cancellationToken);
             var result = await _context.SaveChangesAsync(cancellationToken);
@@ -20,19 +20,19 @@ namespace Travel.Infrastructure.Persistence.Repositories
             return false;
         }
 
-        public async Task<List<Autor>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<Autor>> GetAllAsync(CancellationToken cancellationToken)
         {
             var Autores = await _context.Autores.ToListAsync(cancellationToken);
             return Autores;
         }
 
-        public async Task<Autor> GetbyId(int Id, CancellationToken cancellationToken)
+        public async Task<Autor> GetbyIdAsync(int Id, CancellationToken cancellationToken, string IdString = "")
         {
             var Autor = await _context.Autores.FirstOrDefaultAsync(ed => ed.AutorId == Id, cancellationToken);
             return Autor!;
         }
 
-        public async Task<bool> Update(int Id, Autor entity, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAsync(int Id, Autor entity, CancellationToken cancellationToken)
         {
             var Autor = await _context.Autores.FirstOrDefaultAsync(ed => ed.AutorId == Id, cancellationToken);
 
