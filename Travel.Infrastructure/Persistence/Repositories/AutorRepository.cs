@@ -22,13 +22,13 @@ namespace Travel.Infrastructure.Persistence.Repositories
 
         public async Task<List<Autor>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var Autores = await _context.Autores.ToListAsync(cancellationToken);
+            var Autores = await _context.Autores.AsNoTracking().ToListAsync(cancellationToken);
             return Autores;
         }
 
         public async Task<Autor> GetbyIdAsync(int Id, CancellationToken cancellationToken, string IdString = "")
         {
-            var Autor = await _context.Autores.FirstOrDefaultAsync(ed => ed.AutorId == Id, cancellationToken);
+            var Autor = await _context.Autores.AsNoTracking().FirstOrDefaultAsync(ed => ed.AutorId == Id, cancellationToken);
             return Autor!;
         }
 

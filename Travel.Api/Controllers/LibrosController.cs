@@ -75,7 +75,7 @@ namespace Travel.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 200)]
         [ProducesResponseType(typeof(ApiResponse<AutorConLibrosDto>), 404)]
         [ProducesResponseType(typeof(Problem), 500)]
-      //  [Authorize]
+        [Authorize]
         [HttpGet("/api/v1/Autor/{AutorId}/libros")]
         public async Task<IActionResult> Get(int AutorId, CancellationToken cancellationToken)
         {

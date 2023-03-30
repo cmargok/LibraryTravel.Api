@@ -27,13 +27,13 @@ namespace Travel.Infrastructure.Persistence.Repositories
 
         public async Task<List<Editorial>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var Editoriales = await _context.Editoriales.ToListAsync(cancellationToken);
+            var Editoriales = await _context.Editoriales.AsNoTracking().ToListAsync(cancellationToken);
             return Editoriales;       
         }
 
         public async Task<Editorial> GetbyIdAsync(int Id, CancellationToken cancellationToken, string IdString = "")
         {
-            var Editorial = await _context.Editoriales.FirstOrDefaultAsync(ed => ed.EditorialId == Id, cancellationToken);
+            var Editorial = await _context.Editoriales.AsNoTracking().FirstOrDefaultAsync(ed => ed.EditorialId == Id, cancellationToken);
             return Editorial!;
         }
 

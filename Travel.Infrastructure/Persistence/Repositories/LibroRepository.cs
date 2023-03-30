@@ -46,21 +46,21 @@ namespace Travel.Infrastructure.Persistence.Repositories
 
         public async Task<List<Libro>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var libros = await _context.Libros.ToListAsync(cancellationToken);
+            var libros = await _context.Libros.AsNoTracking().ToListAsync(cancellationToken);
             return libros;
         }
 
         public async Task<List<AutoresHasLibro>> GetAllByAutorId(int AutorId, CancellationToken cancellationToken)
         {
 
-            var query = await _context.AutoresHasLibros.Include(o => o.Libro).ThenInclude(p => p.Editoriales).Where(i => i.AutorId == AutorId).ToListAsync();       
+            var query = await _context.AutoresHasLibros.AsNoTracking().Include(o => o.Libro).ThenInclude(p => p.Editoriales).Where(i => i.AutorId == AutorId).ToListAsync();       
 
             return query;
         }
 
         public async Task<Libro> GetbyIdAsync(int Id, CancellationToken cancellationToken,string IdString = "")
         {
-            var Libro = await _context.Libros.FirstOrDefaultAsync(ed => ed.Isbn == IdString, cancellationToken);
+            var Libro = await _context.Libros.AsNoTracking().FirstOrDefaultAsync(ed => ed.Isbn == IdString, cancellationToken);
             return Libro!;
         }
 
